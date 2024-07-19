@@ -1,0 +1,24 @@
+Compiling 41 files with Solc 0.8.19
+Solc 0.8.19 finished in 4.04s
+Compiler run successful!
+Analysing contracts...
+Running tests...
+
+Ran 8 tests for test/unit/RaffleTest.t.sol:RaffleTest
+[PASS] testCantEnterWhenRaffleIsCalculating() (gas: 155748)
+[FAIL. Reason: Raffle__UpkeepNotNeeded(10000000000000000 [1e16], 1, 0)] testCheckUpkeepReturnsFalseIfEnoughtTimeHasntPassed() (gas: 75733)
+[PASS] testCheckUpkeepReturnsFalseIfItHasNoBalance() (gas: 21098)
+[PASS] testCheckUpkeepReturnsFalseIfRaffleNotOpen() (gas: 151008)
+[PASS] testEmitsEventOnEntrance() (gas: 69667)
+[PASS] testRaffleInitializedInOpenState() (gas: 8067)
+[PASS] testRaffleRecordsPlayerWhenTheyEnter() (gas: 69353)
+[PASS] testRaffleRevertsWhenYouDontPayEnough() (gas: 11119)
+Suite result: FAILED. 7 passed; 1 failed; 0 skipped; finished in 10.12ms (5.90ms CPU time)
+
+Ran 1 test suite in 13.58ms (10.12ms CPU time): 7 tests passed, 1 failed, 0 skipped (8 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/unit/RaffleTest.t.sol:RaffleTest
+[FAIL. Reason: Raffle__UpkeepNotNeeded(10000000000000000 [1e16], 1, 0)] testCheckUpkeepReturnsFalseIfEnoughtTimeHasntPassed() (gas: 75733)
+
+Encountered a total of 1 failing tests, 7 tests succeeded
