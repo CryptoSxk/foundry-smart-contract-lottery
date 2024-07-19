@@ -47,6 +47,7 @@ contract Raffle is VRFConsumerBaseV2 {
     /* Events */
     event EnteredRaffle(address indexed player);
     event PickedWinner(address indexed winner);
+    event RequestedRaffleWinner(uint256 indexed requestId);
 
     constructor(
         uint256 entranceFee,
@@ -114,13 +115,15 @@ contract Raffle is VRFConsumerBaseV2 {
         }
         // Check to see if enought time has passed
         s_raffleState = RaffleState.CALCULATING;
-        VRFCoordinatorV2Interface(i_vrfCoordinator).requestRandomWords(
-            i_gasLane,
-            i_subscriptionId,
-            REQUEST_CONFIRMATIONS,
-            i_callbackGasLimit,
-            NUM_WORDS
-        );
+        uint256 requestId = VRFCoordinatorV2Interface(i_vrfCoordinator)
+            .requestRandomWords(
+                i_gasLane,
+                i_subscriptionId,
+                REQUEST_CONFIRMATIONS,
+                i_callbackGasLimit,
+                NUM_WORDS
+            );
+        emit RequestedRaffleWinner(requestId);
     }
 
     function fulfillRandomWords(
