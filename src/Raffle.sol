@@ -68,7 +68,7 @@ contract Raffle is VRFConsumerBaseV2 {
     }
 
     function enterRaffle() external payable {
-        if (msg.value <= i_entranceFee) {
+        if (msg.value < i_entranceFee) {
             revert Raffle__NotEnoughtEthSent();
         }
         if (s_raffleState != RaffleState.OPEN) {
@@ -92,15 +92,11 @@ contract Raffle is VRFConsumerBaseV2 {
     function checkUpkeep(
         bytes memory /* checkData */
     ) public view returns (bool upkeepNeeded, bytes memory /* performData */) {
-        bool timeHasPassed = (block.timestamp - s_lastTimeStamp) <= i_interval;
         bool isOpen = RaffleState.OPEN == s_raffleState;
-        bool hasBalance = address(this).balance > 0;
+        bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
         bool hasPlayers = s_players.length > 0;
-        upkeepNeeded = (timeHasPassed &&
-            isOpen &&
-            hasBalance &&
-            hasBalance &&
-            hasPlayers);
+        bool hasBalance = address(this).balance > 0;
+        upkeepNeeded = (timePassed && isOpen && hasBalance && hasPlayers);
         return (upkeepNeeded, "0x0");
     }
 
@@ -149,5 +145,11 @@ contract Raffle is VRFConsumerBaseV2 {
     /* Getter Functtion */
     function getEntranceFee() external view returns (uint256) {
         return i_entranceFee;
+    }
+    function getRaffleState() external view returns (RaffleState) {
+        return s_raffleState;
+    }
+    function getPlayer(uint256 indexOfPlayer) external view returns (address) {
+        return s_players[indexOfPlayer];
     }
 }
